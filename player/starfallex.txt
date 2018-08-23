@@ -733,7 +733,7 @@ if CLIENT then
                 
                 -- scroll
                 render.setColor(Color(255, 255, 255, 75))
-                render.drawLine(499, 36, 499, 447)
+                render.drawLine(499, math.remap(scroll, 0, #playlist[genre] - 25, 36, 447), 499, 447)
                 
                 render.setColor(Color(255, 75, 75, 255))
                 render.drawRoundedBox(0, 499, 36, 1, math.remap(scroll, 0, #playlist[genre] - 25, 36, 447) - 36)
