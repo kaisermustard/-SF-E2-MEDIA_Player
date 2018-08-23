@@ -873,11 +873,14 @@ if CLIENT then
         end
     end)
     
-    if not hasPermission("bass.loadURL", toplay.link) then
-        if not hasPermission("bass.play2D", toplay.link) then
-            setupPermissionRequest({"console.command"}, "-- sf_permission_cl bass.loadURL client 3 \n-- sf_permission_cl bass.play2D client 3 \n-- sf_permission_cl bass.loadURL urlwhitelist 2", true)
-        end
+    if not hasPermission("bass.loadURL", toplay.link) or not hasPermission("bass.play2D", toplay.link) then
+        setupPermissionRequest({"console.command"}, "-- sf_permission_cl bass.loadURL client 3 \n-- sf_permission_cl bass.play2D client 3 \n-- sf_permission_cl bass.loadURL urlwhitelist 2", true)
     end
+    if hasPermission("bass.loadURL", toplay.link) and hasPermission("bass.play2D", toplay.link) then
+        load()
+    end
+    
+    draw()
     
     hook.add("permissionrequest", "1", function()
         if hasPermission("console.command") then
@@ -887,12 +890,4 @@ if CLIENT then
             concmd("sf_timebuffer_cl 0.075")
         end
     end)
-    
-    draw()
-    
-    if hasPermission("bass.loadURL", toplay.link) then
-        if hasPermission("bass.play2D", toplay.link) then
-            load()
-        end
-    end
 end
