@@ -338,12 +338,6 @@ if CLIENT then
     }
     
     local texture = {
-        ["default"] = {
-            [1] = {
-                link = render.getTextureID("models/debug/debugwhite"),
-            },
-        },
-        
         ["background"] = {
             [1] = {
                 link = render.getTextureID("https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/texture/madeon.png"),
@@ -549,7 +543,7 @@ if CLIENT then
                 -- flash
                 render.setCullMode(0)
                 
-                render.setTexture(texture["default"][1].link)
+                render.setTexture(nil)
                         
                 render.setColor(Color(255, 255, 255, 0.075 * (1 + (lerp[15] * 0.125))))
                 render.drawTexturedRect(0, 0, 512, 512)
@@ -557,7 +551,7 @@ if CLIENT then
                -- equalizer
                 render.setCullMode(0)
             
-                render.setTexture(texture["default"][1].link)
+                render.setTexture(nil)
                 
                 render.setColor(Color((timer.systime() * 10) % 360, 1, 1):hsvToRGB() - Color(0, 0, 0, 128))
                 render.drawPoly(circleout)
@@ -565,10 +559,9 @@ if CLIENT then
                 render.setColor(Color(75, 75, 75, 255))
                 render.drawPoly(circlein)
                 
-                
                 render.setCullMode(1)
             
-                render.setTexture(texture["default"][1].link)
+                render.setTexture(nil)
                 
                 render.setColor(Color((timer.systime() * 10) % 360, 1, 1):hsvToRGB() - Color(0, 0, 0, 128))
                 render.drawPoly(circleout_)
@@ -587,7 +580,7 @@ if CLIENT then
                 -- time
                 render.setCullMode(0)
                 
-                render.setTexture(texture["default"][1].link)
+                render.setTexture(nil)
             
                 render.setColor(Color(255, 255, 255, 75))
                 render.drawLine(math.remap(time, 0, duration, 18, 494), 496, 494, 496)
@@ -618,7 +611,7 @@ if CLIENT then
                 -- title
                 render.setCullMode(0)
                 
-                render.setTexture(texture["default"][1].link)    
+                render.setTexture(nil)    
                 
                 render.setColor(Color(255, 255, 255, 75))
                 
@@ -639,7 +632,7 @@ if CLIENT then
             -- option
             render.setCullMode(0)
             
-            render.setTexture(texture["default"][1].link)
+            render.setTexture(nil)
             
             if not list then
                 if option then
@@ -701,7 +694,7 @@ if CLIENT then
             -- list
             render.setCullMode(0)
             
-            render.setTexture(texture["default"][1].link)
+            render.setTexture(nil)
             
             if list then
                 render.setColor(Color(75, 75, 75, 75))
