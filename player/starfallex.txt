@@ -1,1 +1,898 @@
--- starfallex
+--@name music-player-fft
+--@author kaisermustard
+
+if SERVER then
+    -- server
+    
+    local component = {
+        ["starfall_screen"] = {
+            [1] = {
+                component = prop.createComponent(chip():localToWorld(Vector(0, 0, 50)), chip():localToWorldAngles(Angle(90, 0, 0)), "starfall_screen", "models/cheeze/pcb/pcb7.mdl", true),
+            },
+        },
+    }
+    
+    local class = "starfall_screen"
+    
+    component[class][1].component:linkComponent(chip())
+end
+
+if CLIENT then
+    -- client
+    
+    local playlist = {
+        ["any"] = {
+            [1] = {
+                index = 1,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Timmy%20Trumpet%20-%20Oracle.mp3",
+                title = "Timmy Trumpet - Orcale",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [2] = {
+                index = 2,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Timmy%20Trumpet%20-%20Mantra.mp3",
+                title = "Timmy Trumpet - Mantra",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [3] = {
+                index = 3,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Chapters.mp3",
+                title = "Chapters",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [4] = {
+                index = 4,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Lumberjvck%20Jvckwood%20-%20Teaser.mp3",
+                title = "Lumberjvck Jvckwood - Teaser",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [5] = {
+                index = 5,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Dvbbs%20&%20Borgeous%20-%20Tsunami.mp3",
+                title = "Dvbbs & Borgeous - Tsunami",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [6] = {
+                index = 6,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Galantis%20-%20Runaway.mp3",
+                title = "Galantis - Runaway",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [7] = {
+                index = 7,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/5FDP%20-%20Hard%20To%20See.mp3",
+                title = "5FDP - Hard To See",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [8] = {
+                index = 8,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Prodigy%20-%20Smack%20My%20Bitch%20Up.mp3",
+                title = "Prodigy - Smack My Bitch Up",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [9] = {
+                index = 9,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Star%20Wars%20-%20The%20Force.mp3",
+                title = "Star Wars - The Force",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [10] = {
+                index = 10,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Zayn%20-%20Dusk%20Till%20Dawn.mp3",
+                title = "Zayn - Dusk Till Dawn",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [11] = {
+                index = 11,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/David%20Guetta%20-%20Bad.mp3",
+                title = "David Guetta - Bad",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [12] = {
+                index = 12,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Dj%20Snake%20-%20Lean%20On.mp3",
+                title = "Dj Snake - Lean On",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [13] = {
+                index = 13,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/The%20Living%20Tombstone%20-%20Nippontradamus.mp3",
+                title = "The Living Tombstone - Nippontradamus",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [14] = {
+                index = 14,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/The%20Living%20Tombstone%20-%20Five%20Nights%20At%20Freddy's.mp3",
+                title = "The Living Tombstone - Five Nights At Freddy's",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [15] = {
+                index = 15,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Monstercat%20-%20Nitrofun.mp3",
+                title = "Monstercat - Nitrofun",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [16] = {
+                index = 16,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Imogen%20Heap%20-%20Hide%20&%20Seek.mp3",
+                title = "Imogen Heap - Hide & Seek",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [17] = {
+                index = 17,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Devin%20Martin%20-%20Killbot.mp3",
+                title = "Devin Martin - Killbot",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [18] = {
+                index = 18,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Marina%20Kaye%20-%20Homeless.mp3",
+                title = "Marina Kaye - Homeless",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [19] = {
+                index = 19,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Lindsey%20Stirling%20-%20Crystallize.mp3",
+                title = "Lindsey Stirling - Crystallize",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [20] = {
+                index = 20,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Ahrix%20-%20Nova.mp3",
+                title = "Ahrix - Nova",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [21] = {
+                index = 21,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Lost%20Frequencies%20-%20Are%20You%20With%20Me.mp3",
+                title = "Lost Frequencies - Are You With Me",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [22] = {
+                index = 22,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Blasterjaxx%20&%20Marnik%20-%20Heart%20Starts%20To%20Beat.mp3",
+                title = "Blasterjaxx & Marnik - Heart Starts To Beat",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [23] = {
+                index = 23,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Krewella%20-%20Come%20And%20Get%20It.mp3",
+                title = "Krewella - Come And Get It",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [24] = {
+                index = 24,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Calvin%20Harris%20-%20Burnin.mp3",
+                title = "Calvin Harris - Burnin",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [25] = {
+                index = 25,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Tristam%20-%20My%20Friend.mp3",
+                title = "Tristam - My Friend",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [26] = {
+                index = 26,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Step%20Into%20The%20Light.mp3",
+                title = "Teminite - Step Into The Light",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [27] = {
+                index = 27,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Stormbringer.mp3",
+                title = "Teminite - Stormbringer",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [28] = {
+                index = 28,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Aspiration.mp3",
+                title = "Teminite - Aspiration",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [29] = {
+                index = 29,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Beastmode.mp3",
+                title = "Teminite - Beastmode",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [30] = {
+                index = 30,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Inception.mp3",
+                title = "Teminite - Inception",
+                amplification = 500,
+                loop = false,
+            },
+            
+            
+            [31] = {
+                index = 31,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Night%20Drive.mp3",
+                title = "Teminite - Night Drive",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [32] = {
+                index = 32,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Senses%20Overload.mp3",
+                title = "Teminite - Senses Overload",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [33] = {
+                index = 33,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Energize.mp3",
+                title = "Teminite - Energize",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [34] = {
+                index = 34,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Evolution.mp3",
+                title = "Teminite - Evolution",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [35] = {
+                index = 35,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Get%20Down.mp3",
+                title = "Teminite - Get Down",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [36] = {
+                index = 36,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Highscore.mp3",
+                title = "Teminite - Highscore",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [37] = {
+                index = 37,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Come%20Together%20Now.mp3",
+                title = "Teminite - Come Together Now",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [38] = {
+                index = 38,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Rock%20It.mp3",
+                title = "Teminite - Rock It",
+                amplification = 500,
+                loop = false,
+            },
+            
+            [39] = {
+                index = 39,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Teminite%20-%20Spider.mp3",
+                title = "Teminite - Spider",
+                amplification = 500,
+                loop = false,
+            },
+        },
+    }
+    
+    local texture = {
+        ["default"] = {
+            [1] = {
+                link = render.getTextureID("models/debug/debugwhite"),
+            },
+        },
+        
+        ["background"] = {
+            [1] = {
+                link = render.getTextureID("https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/texture/madeon.png"),
+            },
+        },
+        
+        ["logo"] = {
+            [1] = {
+                link = render.getTextureID("https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/texture/logo.png"),
+            },
+        },
+    }
+    
+    local font = {
+        ["list"] = {
+            [1] = {
+                font = render.createFont("Roboto Mono", 128, 500, true, false, false, false, false, false)
+            }
+        },
+        
+        ["option"] = {
+            [1] = {
+                font = render.createFont("Roboto Mono", 128, 500, true, false, false, false, false, false)
+            }
+        },
+        
+        ["time"] = {
+            [1] = {
+                font = render.createFont("Roboto Mono", 128, 500, true, false, false, false, false, false)
+            }
+        },
+        
+        ["title"] = {
+            [1] = {
+                font = render.createFont("Roboto Mono", 128, 500, true, false, false, false, false, false)
+            }
+        },
+    }
+    
+    local genre = "any"
+    
+    local toplay = playlist[genre][math.random(#playlist[genre])]
+    
+    local sample = 5
+    local sample_ = 8 * (2 ^ sample)
+    
+    local song = nil
+    local fft = {}
+    local lerp = {}
+    local duration = 3600
+    local time = 0
+    
+    for i = 0, sample_ do
+        fft[i] = 0
+        lerp[i] = 0
+    end
+    
+    local playing = false
+    
+    local option = false
+    local pause = false
+    local loop = false
+    local mute = false
+    local draw = true
+    
+    local list = false
+    local scroll = 0
+    
+    local function load()    
+        hook.add("think", "1", function()
+            if not playing then
+                bass.loadURL(toplay.link, "noblock", function(snd, err, errtxt)
+                    if song then
+                        song:stop()
+                    end
+                    if snd then
+                        song = snd
+                        
+                        pcall(snd.setLooping, snd, toplay.loop)
+                        
+                        duration = snd:getLength()
+                        
+                        hook.add("think", "2", function()
+                            snd:setPos(chip():getPos())
+                    
+                            time = snd:getTime()
+                            
+                            if not pause then
+                                snd:play()
+                            end
+                            if pause then 
+                                snd:pause()
+                            end
+                    
+                            if not mute then 
+                                snd:setVolume(math.clamp((1 - player():getPos():getDistance(chip():getPos()) / 500) * 0.50, 0, 1))
+                                
+                                fft = snd:getFFT(sample)
+                            end
+                            if mute then
+                                snd:setVolume(0)
+                        
+                                for i = 0, sample_, 1 do
+                                    fft[i] = 0
+                                    lerp[i] = 0
+                                end
+                            end
+                        end)
+                    else
+                        print("[" .. err .. "]" .. errtxt)
+                    end
+                end)
+        
+                playing = true
+            end
+            if playing then
+                if duration - time <= 0 then
+                    if not loop then
+                        toplay = playlist[genre][math.random(#playlist[genre])]
+                        
+                        duration = 3600
+                        time = 0
+                        
+                        playing = false
+                    end
+                    if loop then
+                        duration = 3600
+                        time = 0
+                
+                        playing = false
+                    end
+                end
+            end
+        end)
+    end
+    
+    local circleout = {{x = 256, y = 256}}
+    local circlein = {{x = 256,y = 256}}
+    local circleout_ = {{x = 256, y = 256}}
+    local circlein_ = {{x = 256, y = 256}}
+    
+    for i = 2, sample_ + 1, 1 do
+        circleout[i] = {}
+        circlein[i] = {}
+        circleout_[i] = {}
+        circlein_[i] = {}
+    end
+    
+    local function draw()
+        hook.add("render", "1", function()
+            local matrix = Matrix()
+            matrix:setScale(Vector(0.1, 0.1))
+            render.pushMatrix(matrix)
+            render.popMatrix()
+        
+            if #playlist[genre] > 26 then
+                scroll = math.clamp(scroll, 0, #playlist[genre] - 25)
+            end
+            
+            if not draw then
+                -- background
+                render.setCullMode(0)
+                    
+                render.setTexture(texture["background"][1].link)
+                            
+                render.setColor(Color(175, 175, 175, 255))
+                render.drawTexturedRect(0, 0, 512, 512)
+            end
+            if draw then
+                for i = 2, sample_ + 1, 1 do
+                    if not fft[(i - 1)] then
+                        lerp[(i - 1)] = 0
+                    end
+                    if fft[(i - 1)] then
+                        lerp[i - 1] = math.lerp(timer.frametime() * 5, lerp[i - 1], fft[i - 1] * toplay.amplification)
+                    end
+                    
+                    lerp[i - 1] = math.clamp(lerp[i - 1], 0, 128 - (lerp[15] * 0.25))
+                    
+                    local theta = (((i - 1) - 1) * math.pi / ( sample_ - 1))
+                    
+                    circleout[i].x = 256 + math.cos(theta + (timer.systime() * 0.25)) * (60 + lerp[i - 1] + (lerp[15] * 0.25))
+                    circleout[i].y = 256 + math.sin(theta + (timer.systime() * 0.25)) * (60 + lerp[i - 1] + (lerp[15] * 0.25))
+                    
+                    circlein[i].x = 256 + math.cos(theta + (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
+                    circlein[i].y = 256 + math.sin(theta + (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
+                    
+                    circleout_[i].x = 256 + math.cos(theta - (timer.systime() * 0.25)) * (60 + lerp[i - 1] + (lerp[15] * 0.25))
+                    circleout_[i].y = 256 - math.sin(theta - (timer.systime() * 0.25)) * (60 + lerp[i - 1] + (lerp[15] * 0.25))
+                    
+                    circlein_[i].x = 256 + math.cos(theta - (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
+                    circlein_[i].y = 256 - math.sin(theta - (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
+                end
+                
+                -- background
+                render.setCullMode(0)
+                
+                render.setTexture(texture["background"][1].link)
+                        
+                render.setColor(Color(175, 175, 175, 255))
+                render.drawTexturedRect(0 - lerp[15], 0 - lerp[15], 512 + (lerp[15] * 2), 512 + (lerp[15] * 2))
+                
+                -- flash
+                render.setCullMode(0)
+                
+                render.setTexture(texture["default"][1].link)
+                        
+                render.setColor(Color(255, 255, 255, 0.075 * (1 + (lerp[15] * 0.125))))
+                render.drawTexturedRect(0, 0, 512, 512)
+                
+               -- equalizer
+                render.setCullMode(0)
+            
+                render.setTexture(texture["default"][1].link)
+                
+                render.setColor(Color((timer.systime() * 10) % 360, 1, 1):hsvToRGB() - Color(0, 0, 0, 128))
+                render.drawPoly(circleout)
+            
+                render.setColor(Color(75, 75, 75, 255))
+                render.drawPoly(circlein)
+                
+                
+                render.setCullMode(1)
+            
+                render.setTexture(texture["default"][1].link)
+                
+                render.setColor(Color((timer.systime() * 10) % 360, 1, 1):hsvToRGB() - Color(0, 0, 0, 128))
+                render.drawPoly(circleout_)
+            
+                render.setColor(Color(75, 75, 75, 255))
+                render.drawPoly(circlein_)
+                
+                -- logo
+                render.setCullMode(0)
+                
+                render.setTexture(texture["logo"][1].link)
+                        
+                render.setColor(Color(255, 255, 255, 255))
+                render.drawTexturedRect((256 - 64) - (lerp[15] * 0.25), (256 - 64) - (lerp[15] * 0.25), 256 + lerp[15], 256 + lerp[15])
+                
+                -- time
+                render.setCullMode(0)
+                
+                render.setTexture(texture["default"][1].link)
+            
+                render.setColor(Color(255, 255, 255, 75))
+                render.drawLine(math.remap(time, 0, duration, 18, 494), 496, 494, 496)
+                
+                render.setColor(Color(255, 75, 75, 255))
+                render.drawRoundedBox(0, 18, 496, math.remap(time, 0, duration, 18, 494) - 18, 1)
+                render.drawRoundedBox(3, math.remap(time, 0, duration, 18, 494) - 1, 496 - 1, 3, 3)
+                
+                minute = string.format("%02.f", math.floor(time / 60))
+                second = string.format("%02.f", math.floor(time - minute * 60))
+                
+                minute_ = string.format("%02.f", math.floor(duration / 60))
+                second_ = string.format("%02.f", math.floor(duration - minute_ * 60))
+                
+                render.setColor(Color(255, 255, 255, 75))
+                render.setFont(font["time"][1].font)
+                
+                matrix:setTranslation(Vector(18, 504))
+                render.pushMatrix(matrix)
+                render.drawSimpleText(0, 0, minute .. ":" .. second, 1, 1)
+                render.popMatrix()
+                
+                matrix:setTranslation(Vector(494, 504))
+                render.pushMatrix(matrix)
+                render.drawSimpleText(0, 0, minute_ .. ":" .. second_, 1, 1)
+                render.popMatrix()
+                
+                -- title
+                render.setCullMode(0)
+                
+                render.setTexture(texture["default"][1].link)    
+                
+                render.setColor(Color(255, 255, 255, 75))
+                
+                render.setFont(font["title"][1].font)
+                
+                matrix:setTranslation(Vector(256, 504))
+                render.pushMatrix(matrix)
+                render.drawSimpleText(0, 0, toplay.title, 1, 1)
+                render.popMatrix()
+            end
+            
+            -- bar
+            render.setCullMode(0)
+            
+            render.setColor(Color(75, 75, 75, 75))
+            render.drawRoundedBox(0, 2, 2, 508, 14)
+            
+            -- option
+            render.setCullMode(0)
+            
+            render.setTexture(texture["default"][1].link)
+            
+            if not list then
+                if option then
+                    render.setColor(Color(75, 75, 75, 75))
+                    render.drawRoundedBox(0, 382, 16, 128, 110)
+                    
+                    render.setColor(Color(255, 255, 255, 75))
+                    render.drawRoundedBox(2, 385, 46, 16, 16)
+                    render.drawRoundedBox(2, 385, 66, 16, 16)
+                    render.drawRoundedBox(2, 385, 86, 16, 16)
+                    render.drawRoundedBox(2, 385, 106, 16, 16)
+                    
+                    render.setFont(font["option"][1].font)
+                    
+                    matrix:setTranslation(Vector(404, 53))
+                    render.pushMatrix(matrix)
+                    render.drawSimpleText(0, 0, "Pause", 0, 1)
+                    render.popMatrix()
+                    
+                    matrix:setTranslation(Vector(404, 73))
+                    render.pushMatrix(matrix)
+                    render.drawSimpleText(0, 0, "Loop", 0, 1)
+                    render.popMatrix()
+                    
+                    matrix:setTranslation(Vector(404, 93))
+                    render.pushMatrix(matrix)
+                    render.drawSimpleText(0, 0, "Mute", 0, 1)
+                    render.popMatrix()
+                    
+                    matrix:setTranslation(Vector(404, 113))
+                    render.pushMatrix(matrix)
+                    render.drawSimpleText(0, 0, "Render", 0, 1)
+                    render.popMatrix()
+                    
+                    if pause then
+                        render.setColor(Color(75, 75, 75, 75))
+                        render.drawRoundedBox(2, 387, 48, 12, 12)
+                    end
+                    if loop then
+                        render.setColor(Color(75, 75, 75, 75))
+                        render.drawRoundedBox(2, 387, 68, 12, 12)
+                    end
+                    if mute then
+                        render.setColor(Color(75, 75, 75, 75))
+                        render.drawRoundedBox(2, 387, 88, 12, 12)
+                    end
+                    if draw then
+                        render.setColor(Color(75, 75, 75, 75))
+                        render.drawRoundedBox(2, 387, 108, 12, 12)
+                    end
+                end
+            end
+            
+            render.setColor(Color(255, 255, 255, 75))
+            render.drawRoundedBox(1, 492, 4, 16, 2)
+            render.drawRoundedBox(1, 492, 8, 16, 2)
+            render.drawRoundedBox(1, 492, 12, 16, 2)
+            
+            -- list
+            render.setCullMode(0)
+            
+            render.setTexture(texture["default"][1].link)
+            
+            if list then
+                render.setColor(Color(75, 75, 75, 75))
+                render.drawRoundedBox(0, 2, 16, 508, 452)
+                
+                for i = 1, 25, 1 do
+                    if i <= #playlist[genre] then
+                        render.setColor(Color(255, 255, 255, 75))
+                        render.drawRoundedBox(2, 4, 0 + (18 * i), 486, 16)
+                        
+                        render.setColor(Color(75, 75, 75, 75))
+                        render.drawRoundedBox(2, 6, 2 + (18 * i), 482, 12)
+                        
+                        render.setColor(Color(255, 255, 255, 75))
+                        render.setFont(font["list"][1].font)
+                        
+                        matrix:setTranslation(Vector(8, 8 + (18 * i)))
+                        render.pushMatrix(matrix)
+                        render.drawSimpleText(0, 0, i + scroll .. "°" .. " - " .. playlist[genre][i + scroll].title, 0, 1)
+                        render.popMatrix()
+                    end
+                end
+                
+                -- selection
+                if toplay.index - scroll < 26 then
+                    render.setColor(Color(75, 75, 75, 75))
+                    render.drawRoundedBox(2, 6, 2 + (18 * (toplay.index - scroll)), 482, 12)
+                end
+                
+                -- scroll
+                render.setColor(Color(255, 255, 255, 75))
+                render.drawLine(499, 36, 499, 447)
+                
+                render.setColor(Color(255, 75, 75, 255))
+                render.drawRoundedBox(0, 499, 36, 1, math.remap(scroll, 0, #playlist[genre] - 25, 36, 447) - 36)
+                render.drawRoundedBox(3, 498, math.remap(scroll, 0, #playlist[genre] - 25, 36, 447) - 1, 3, 3)
+            
+                render.setColor(Color(255, 255, 255, 75))
+                render.drawRoundedBox(2, 492, 18, 16, 16)
+                
+                render.setColor(Color(75, 75, 75, 75))
+                render.drawRoundedBox(2, 494, 20, 12, 12)
+                
+                render.setColor(Color(255, 255, 255, 75))
+                render.drawRoundedBox(2, 492, 450, 16, 16)
+                
+                render.setColor(Color(75, 75, 75, 75))
+                render.drawRoundedBox(2, 494, 452, 12, 12)
+            end
+            
+            render.setColor(Color(255, 255, 255, 75))
+            render.drawRoundedBox(1, 4, 4, 16, 2)
+            render.drawRoundedBox(1, 4, 8, 16, 2)
+            render.drawRoundedBox(1, 4, 12, 16, 2)
+        end)
+    end
+    
+    local function inrange(x, y, width, height)
+        local x_, y_ = render.cursorPos()
+        
+        if x_ and y_ then
+            if x_ < x then
+                return false
+            end
+            
+            if x_ > x + width then
+                return false
+            end
+            
+            if y_ < y then
+                return false
+            end
+            
+            if y_ > y + height then
+                return false
+            end
+            
+            return true
+        end
+    end
+    
+    hook.add("keypress", "1", function(ply, key)
+        if key == 32 then
+            if inrange(4, 4, 16, 10) then
+                timer.create("list", 0.0050, 1, function()
+                    list = !list
+                    
+                    timer.remove("list")
+                end)
+            end
+            
+            if not list then
+                if inrange(492, 4, 16, 10) then
+                    timer.create("option", 0.0050, 1, function()
+                        option = !option
+                    
+                        timer.remove("option")
+                    end)
+                end
+            
+                if option then
+                    if inrange(387, 48, 12, 12) then
+                        timer.create("pause", 0.0050, 1, function()
+                            pause = !pause
+                    
+                            timer.remove("pause")
+                        end)
+                    end
+                    
+                    if inrange(387, 68, 12, 12) then
+                        timer.create("loop", 0.0050, 1, function()
+                            loop = !loop
+                    
+                            timer.remove("loop")
+                        end)
+                    end
+                    
+                    if inrange(386, 88, 12, 12) then
+                        timer.create("mute", 0.0050, 1, function()
+                            mute = !mute
+                    
+                            timer.remove("mute")
+                        end)
+                    end
+            
+                    if inrange(386, 108, 12, 12) then
+                        timer.create("draw", 0.0050, 1, function()
+                            draw = !draw
+                    
+                            timer.remove("draw")
+                        end)
+                    end
+                end
+            end
+            if list then
+                for i = 1, 25, 1 do
+                    if inrange(6, 2 + (18 * i), 482, 12) then
+                        timer.create("element", 0.0050, 1, function()
+                            toplay = playlist[genre][i + scroll]
+                
+                            duration = 3600
+                            time = 0
+                
+                            playing = false
+                        
+                            timer.remove("element")
+                        end)
+                    end
+                end
+                
+                if #playlist[genre] > 25 then
+                    if inrange(494, 20, 12, 12) then
+                        timer.create("scroll", 0.0050, 1, function()
+                            scroll = scroll - 1
+                        
+                            timer.remove("scroll")
+                        end)
+                    end
+                
+                    if inrange(494, 452, 12, 12) then
+                        timer.create("scroll", 0.0050, 1, function()
+                            scroll = scroll + 1
+                            
+                            timer.remove("scroll")
+                        end)
+                    end
+                end
+            end
+        end
+    end)
+    
+    if not hasPermission("bass.loadURL", toplay.link) then
+        if not hasPermission("bass.play2D", toplay.link) then
+            setupPermissionRequest({"console.command"}, "-- sf_permission_cl bass.loadURL client 3 \n-- sf_permission_cl bass.play2D client 3 \n-- sf_permission_cl bass.loadURL urlwhitelist 2", true)
+        end
+    end
+    
+    hook.add("permissionrequest", "1", function()
+        if hasPermission("console.command") then
+            concmd("sf_permission_cl bass.loadURL client 3")
+            concmd("sf_permission_cl bass.play2D client 3")
+            concmd("sf_permission_cl bass.loadURL urlwhitelist 2")
+            concmd("sf_timebuffer_cl 0.075")
+        end
+    end)
+    
+    draw()
+    
+    if hasPermission("bass.loadURL", toplay.link) then
+        if hasPermission("bass.play2D", toplay.link) then
+            load()
+        end
+    end
+end
