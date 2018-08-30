@@ -354,25 +354,25 @@ if CLIENT then
     local font = {
         ["list"] = {
             [1] = {
-                font = render.createFont("Roboto Mono", 128, 500, true, false, false, false, false, false)
+                font = render.createFont("Roboto Mono", 128, 512, true, false, false, false, false, true)
             }
         },
         
         ["option"] = {
             [1] = {
-                font = render.createFont("Roboto Mono", 128, 500, true, false, false, false, false, false)
+                font = render.createFont("Roboto Mono", 128, 512, true, false, false, false, false, true)
             }
         },
         
         ["time"] = {
             [1] = {
-                font = render.createFont("Roboto Mono", 128, 500, true, false, false, false, false, false)
+                font = render.createFont("Roboto Mono", 128, 512, true, false, false, false, false, true)
             }
         },
         
         ["title"] = {
             [1] = {
-                font = render.createFont("Roboto Mono", 128, 500, true, false, false, false, false, false)
+                font = render.createFont("Roboto Mono", 128, 512, true, false, false, false, false, true)
             }
         },
     }
@@ -416,9 +416,7 @@ if CLIENT then
                     end
                     if snd then
                         song = snd
-                        
-                        pcall(snd.setLooping, snd, toplay.loop)
-                        
+                         
                         duration = snd:getLength()
                         
                         hook.add("think", "2", function()
@@ -483,16 +481,18 @@ if CLIENT then
         node[i].position = Vector(math.random(-512, 512), math.random(-512, 512), math.random(0, 512))
     end
     
-    local circleout = {{x = 256, y = 256}}
-    local circlein = {{x = 256,y = 256}}
-    local circleout_ = {{x = 256, y = 256}}
-    local circlein_ = {{x = 256, y = 256}}
+    local visualizer = {}
+    
+    visualizer["first.bottom"] = {{x = 256, y = 256}}
+    visualizer["first.top"] = {{x = 256, y = 256}}
+    visualizer["second.bottom"] = {{x = 256, y = 256}}
+    visualizer["second.top"] = {{x = 256, y = 256}}
     
     for i = 2, sample_ + 1, 1 do
-        circleout[i] = {}
-        circlein[i] = {}
-        circleout_[i] = {}
-        circlein_[i] = {}
+        visualizer["first.bottom"][i] = {}
+        visualizer["first.top"][i] = {}
+        visualizer["second.bottom"][i] = {}
+        visualizer["second.top"][i] = {}
     end
     
     local function draw()
@@ -528,17 +528,17 @@ if CLIENT then
                     
                     local theta = (((i - 1) - 1) * math.pi / (sample_ - 1))
                     
-                    circleout[i].x = 256 + math.cos(theta + (timer.systime() * 0.25)) * (60 + lerp[i - 1] + (lerp[15] * 0.25))
-                    circleout[i].y = 256 + math.sin(theta + (timer.systime() * 0.25)) * (60 + lerp[i - 1] + (lerp[15] * 0.25))
+                    visualizer["first.bottom"][i].x = 256 + math.cos(theta + (timer.systime() * 0.25)) * (60 + lerp[i - 1] + (lerp[15] * 0.25))
+                    visualizer["first.bottom"][i].y = 256 + math.sin(theta + (timer.systime() * 0.25)) * (60 + lerp[i - 1] + (lerp[15] * 0.25))
                     
-                    circlein[i].x = 256 + math.cos(theta + (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
-                    circlein[i].y = 256 + math.sin(theta + (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
+                    visualizer["first.top"][i].x = 256 + math.cos(theta + (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
+                    visualizer["first.top"][i].y = 256 + math.sin(theta + (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
                     
-                    circleout_[i].x = 256 + math.cos(theta - (timer.systime() * 0.25)) * (60 + lerp[i - 1] + (lerp[15] * 0.25))
-                    circleout_[i].y = 256 - math.sin(theta - (timer.systime() * 0.25)) * (60 + lerp[i - 1] + (lerp[15] * 0.25))
+                    visualizer["second.bottom"][i].x = 256 + math.cos(theta - (timer.systime() * 0.25)) * (60 + lerp[i - 1] + (lerp[15] * 0.25))
+                    visualizer["second.bottom"][i].y = 256 - math.sin(theta - (timer.systime() * 0.25)) * (60 + lerp[i - 1] + (lerp[15] * 0.25))
                     
-                    circlein_[i].x = 256 + math.cos(theta - (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
-                    circlein_[i].y = 256 - math.sin(theta - (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
+                    visualizer["second.top"][i].x = 256 + math.cos(theta - (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
+                    visualizer["second.top"][i].y = 256 - math.sin(theta - (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
                 end
                 
                 -- background
@@ -581,20 +581,20 @@ if CLIENT then
                 render.setTexture(nil)
                 
                 render.setColor(Color((timer.systime() * 10) % 360, 1, 1):hsvToRGB() - Color(0, 0, 0, 128))
-                render.drawPoly(circleout)
+                render.drawPoly(visualizer["first.bottom"])
             
                 render.setColor(Color(75, 75, 75, 255))
-                render.drawPoly(circlein)
+                render.drawPoly(visualizer["first.top"])
                 
                 render.setCullMode(1)
             
                 render.setTexture(nil)
                 
                 render.setColor(Color((timer.systime() * 10) % 360, 1, 1):hsvToRGB() - Color(0, 0, 0, 128))
-                render.drawPoly(circleout_)
+                render.drawPoly(visualizer["second.bottom"])
             
                 render.setColor(Color(75, 75, 75, 255))
-                render.drawPoly(circlein_)
+                render.drawPoly(visualizer["second.top"])
                 
                 -- logo
                 render.setCullMode(0)
