@@ -389,6 +389,7 @@ if CLIENT then
     local lerp = {}
     local duration = 3600
     local time = 0
+    local time_ = 0
     
     for i = 0, sample_ do
         fft[i] = 0
@@ -422,7 +423,7 @@ if CLIENT then
                         
                         hook.add("think", "2", function()
                             snd:setPos(chip():getPos())
-                    
+                            
                             time = snd:getTime()
                             
                             if not pause then
