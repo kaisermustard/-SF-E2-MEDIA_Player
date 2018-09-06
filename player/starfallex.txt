@@ -290,6 +290,13 @@ if CLIENT then
                 title = "Teminite - Spider",
                 amplification = 500,
             },
+            
+            [40] = {
+                index = 40,
+                link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/mp3/Doom%20-%20BFG%20Division.mp3",
+                title = "Doom - BFG Division",
+                amplification = 500,
+            },
         },
     }
     
@@ -338,7 +345,7 @@ if CLIENT then
     local toplay = playlist[genre][math.random(#playlist[genre])]
     
     local sample = 5
-    local sample_ = 2 * (2 ^ sample)
+    local sample_ = 8 * (2 ^ sample)
     
     local song = nil
     local fft = {}
