@@ -1,6 +1,6 @@
 --@name music-player-fft
 --@author kaisermustard
---@version 0.0.3
+--@version 0.0.4
 
 if SERVER then
     local component = {
@@ -863,12 +863,14 @@ if CLIENT then
             local version_ = string.sub(content_, 61, string.find(content_, "\n", 61) - 1)
             local hash_ = crc(content_)
             
-            print(string.format("GITHUB version: %s \nCURRENT version: %s", version, version_))
-            
             if version != version_ then
+   				print(string.format("GITHUB version: %s \nCURRENT version: %s", version, version_))
+
                 file.write("music-player-fft.txt", content)
             else
                 if hash != hash_ then
+                	print(string.format("GITHUB hash: %s \nCURRENT hash: %s", hash, hash_))
+
                     file.write("music-player-fft.txt", content)
                 end
             end
