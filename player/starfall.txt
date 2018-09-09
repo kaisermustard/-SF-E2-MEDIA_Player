@@ -856,7 +856,6 @@ if CLIENT then
 
     if http.canRequest() then
         http.get(script["starfall"].link, function(content, size)
-            -- local version = crc(content)
             local version = string.sub(content, 61, string.find(content, "\n", 61) - 1)
             local hash = crc(content)
             
