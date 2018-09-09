@@ -848,4 +848,23 @@ if CLIENT then
             concmd("sf_timebuffer_cl 0.125")
         end
     end)
+
+    local url = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/player/starfallex.txt"
+
+    if http.canRequest() then
+        http.get(url, function(content, size)
+            local version = crc(content)
+            
+            local content_ = file.read("music-player-fft.txt")
+            local version_ = crc(content_)
+            
+            print(version .. " " .. version_)
+            
+            if version != version_ then
+                file.write("music-player-fft.txt", content)
+                
+                print("version was out of date")
+            end
+        end)
+    end
 end
