@@ -1,6 +1,8 @@
 --@name music-player-fft
 --@author kaisermustard
 
+-- version 0.0.1
+
 if SERVER then
     local component = {
         ["starfall_screen"] = {
