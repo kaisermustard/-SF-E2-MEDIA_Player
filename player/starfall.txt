@@ -1,6 +1,6 @@
 --@name music-player-fft
 --@author kaisermustard
---@version 0.0.1
+--@version 0.0.2
 
 if SERVER then
     local component = {
@@ -869,7 +869,7 @@ if CLIENT then
                 file.write("music-player-fft.txt", content)
             else
                 if hash != hash_ then
-                    error("do not modify")
+                    file.write("music-player-fft.txt", content)
                 end
             end
         end)
