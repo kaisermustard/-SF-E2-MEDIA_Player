@@ -318,25 +318,25 @@ if CLIENT then
     local font = {
         ["list"] = {
             [1] = {
-                font = render.createFont("roboto mono", 128, 512, true, false, false, false, false, true)
+                font = render.createFont("Roboto Mono", 128, 512, true, false, false, false, false, true)
             }
         },
         
         ["option"] = {
             [1] = {
-                font = render.createFont("roboto mono", 128, 512, true, false, false, false, false, true)
+                font = render.createFont("Roboto Mono", 128, 512, true, false, false, false, false, true)
             }
         },
         
         ["time"] = {
             [1] = {
-                font = render.createFont("roboto mono", 128, 512, true, false, false, false, false, true)
+                font = render.createFont("Roboto Mono", 128, 512, true, false, false, false, false, true)
             }
         },
         
         ["title"] = {
             [1] = {
-                font = render.createFont("roboto mono", 128, 512, true, false, false, false, false, true)
+                font = render.createFont("Roboto Mono", 128, 512, true, false, false, false, false, true)
             }
         },
     }
