@@ -1,6 +1,6 @@
 --@name music-player-fft
 --@author kaisermustard
---@version 0.0.4
+--@version 0.0.5
 
 if SERVER then
     local component = {
@@ -304,13 +304,13 @@ if CLIENT then
     local texture = {
         ["background"] = {
             [1] = {
-                link = render.getTextureID("https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/texture/madeon.png"),
+                texture = render.getTextureID("https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/texture/madeon.png"),
             },
         },
         
         ["logo"] = {
             [1] = {
-                link = render.getTextureID("https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/texture/logo.png"),
+                texture = render.getTextureID("https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/texture/logo.png"),
             },
         },
     }
@@ -438,16 +438,12 @@ if CLIENT then
     
     local visualizer = {}
     
-    visualizer["first.bottom"] = {{x = 256, y = 256}}
-    visualizer["first.top"] = {{x = 256, y = 256}}
-    visualizer["second.bottom"] = {{x = 256, y = 256}}
-    visualizer["second.top"] = {{x = 256, y = 256}}
+    visualizer["first"] = {{x = 256, y = 256}}
+    visualizer["second"] = {{x = 256, y = 256}}
     
     for i = 2, sample_ + 1, 1 do
-        visualizer["first.bottom"][i] = {}
-        visualizer["first.top"][i] = {}
-        visualizer["second.bottom"][i] = {}
-        visualizer["second.top"][i] = {}
+        visualizer["first"][i] = {}
+        visualizer["second"][i] = {}
     end
     
     local function draw()
@@ -465,7 +461,7 @@ if CLIENT then
                 -- background
                 render.setCullMode(0)
                     
-                render.setTexture(texture["background"][1].link)
+                render.setTexture(texture["background"][1].texture)
                             
                 render.setColor(Color(175, 175, 175, 255))
                 render.drawTexturedRect(0, 0, 512, 512)
@@ -483,23 +479,17 @@ if CLIENT then
                     
                     local theta = (((i - 1) - 1) * math.pi / (sample_ - 1))
                     
-                    visualizer["first.bottom"][i].x = 256 + math.cos(theta + (timer.systime() * 0.25)) * (60 + (lerp[i - 1] * 1.125) + (lerp[15] * 0.25))
-                    visualizer["first.bottom"][i].y = 256 + math.sin(theta + (timer.systime() * 0.25)) * (60 + (lerp[i - 1] * 1.125) + (lerp[15] * 0.25))
+                    visualizer["first"][i].x = 256 + math.cos(theta + (timer.systime() * 0.25)) * (60 + (lerp[i - 1] * 1.125) + (lerp[15] * 0.25))
+                    visualizer["first"][i].y = 256 + math.sin(theta + (timer.systime() * 0.25)) * (60 + (lerp[i - 1] * 1.125) + (lerp[15] * 0.25))
                     
-                    visualizer["first.top"][i].x = 256 + math.cos(theta + (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
-                    visualizer["first.top"][i].y = 256 + math.sin(theta + (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
-                    
-                    visualizer["second.bottom"][i].x = 256 + math.cos(theta - (timer.systime() * 0.25)) * (60 + (lerp[i - 1] * 1.125) + (lerp[15] * 0.25))
-                    visualizer["second.bottom"][i].y = 256 - math.sin(theta - (timer.systime() * 0.25)) * (60 + (lerp[i - 1] * 1.125) + (lerp[15] * 0.25))
-                    
-                    visualizer["second.top"][i].x = 256 + math.cos(theta - (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
-                    visualizer["second.top"][i].y = 256 - math.sin(theta - (timer.systime() * 0.25)) * (56 + lerp[i - 1] + (lerp[15] * 0.25))
+                    visualizer["second"][i].x = 256 + math.cos(theta - (timer.systime() * 0.25)) * (60 + (lerp[i - 1] * 1.125) + (lerp[15] * 0.25))
+                    visualizer["second"][i].y = 256 - math.sin(theta - (timer.systime() * 0.25)) * (60 + (lerp[i - 1] * 1.125) + (lerp[15] * 0.25))
                 end
                 
                 -- background
                 render.setCullMode(0)
                 
-                render.setTexture(texture["background"][1].link)
+                render.setTexture(texture["background"][1].texture)
                         
                 render.setColor(Color(175, 175, 175, 255))
                 render.drawTexturedRect(0 - lerp[15], 0 - lerp[15], 512 + (lerp[15] * 2), 512 + (lerp[15] * 2))
@@ -509,7 +499,7 @@ if CLIENT then
                 
                 render.setTexture(nil)
                         
-                render.setColor(Color(255, 255, 255, 0.075 * (1 + (lerp[15] * 0.25))))
+                render.setColor(Color(255, 255, 255, 0.075 * (1 + (lerp[15] * 0.375))))
                 render.drawTexturedRect(0, 0, 512, 512)
                 
                 -- equalizer
@@ -518,25 +508,19 @@ if CLIENT then
                 render.setTexture(nil)
                 
                 render.setColor(Color((timer.systime() * 10) % 360, 1, 1):hsvToRGB():setA(128))
-                render.drawPoly(visualizer["first.bottom"])
+                render.drawPoly(visualizer["first"])
             
-                render.setColor(Color(75, 75, 75, 255))
-                render.drawPoly(visualizer["first.top"])
-                
                 render.setCullMode(1)
             
                 render.setTexture(nil)
                 
                 render.setColor(Color((timer.systime() * 10) % 360, 1, 1):hsvToRGB():setA(128))
-                render.drawPoly(visualizer["second.bottom"])
+                render.drawPoly(visualizer["second"])
             
-                render.setColor(Color(75, 75, 75, 255))
-                render.drawPoly(visualizer["second.top"])
-                
                 -- logo
                 render.setCullMode(0)
                 
-                render.setTexture(texture["logo"][1].link)
+                render.setTexture(texture["logo"][1].texture)
                         
                 render.setColor(Color(255, 255, 255, 255))
                 render.drawTexturedRect((256 - 64) - (lerp[15] * 0.25), (256 - 64) - (lerp[15] * 0.25), 256 + lerp[15], 256 + lerp[15])
@@ -864,12 +848,12 @@ if CLIENT then
             local hash_ = crc(content_)
             
             if version != version_ then
-   				print(string.format("GITHUB version: %s \nCURRENT version: %s", version, version_))
+                   print(string.format("GITHUB version: %s \nCURRENT version: %s", version, version_))
 
                 file.write("music-player-fft.txt", content)
             else
                 if hash != hash_ then
-                	print(string.format("GITHUB hash: %s \nCURRENT hash: %s", hash, hash_))
+                    print(string.format("GITHUB hash: %s \nCURRENT hash: %s", hash, hash_))
 
                     file.write("music-player-fft.txt", content)
                 end
