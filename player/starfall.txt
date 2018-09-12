@@ -1,6 +1,6 @@
 --@name music-player-fft
 --@author kaisermustard
---@version 0.0.5
+--@version 0.0.6
 
 if SERVER then
     local component = {
@@ -450,8 +450,6 @@ if CLIENT then
         hook.add("render", "1", function()
             local matrix = Matrix()
             matrix:setScale(Vector(0.08, 0.08))
-            render.pushMatrix(matrix)
-            render.popMatrix()
             
             if #playlist[genre] > 26 then
                 scroll = math.clamp(scroll, 0, #playlist[genre] - 25)
