@@ -1,6 +1,6 @@
 --@name music-player-fft
 --@author kaisermustard
---@version 0.0.6
+--@version 0.0.7
 
 if SERVER then
     local component = {
@@ -835,27 +835,29 @@ if CLIENT then
             link = "https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/player/starfall.txt",
         },
     }
-
-    if http.canRequest() then
-        http.get(script["starfall"].link, function(content, size)
-            local version = string.sub(content, 61, string.find(content, "\n", 61) - 1)
-            local hash = crc(content)
-            
-            local content_ = file.read("music-player-fft.txt")
-            local version_ = string.sub(content_, 61, string.find(content_, "\n", 61) - 1)
-            local hash_ = crc(content_)
-            
-            if version != version_ then
-                   print(string.format("GITHUB version: %s \nCURRENT version: %s", version, version_))
-
-                file.write("music-player-fft.txt", content)
-            else
-                if hash != hash_ then
-                    print(string.format("GITHUB hash: %s \nCURRENT hash: %s", hash, hash_))
-
+    
+    if player() == owner() then
+        if http.canRequest() then
+            http.get(script["starfall"].link, function(content, size)
+                local version = string.sub(content, 61, string.find(content, "\n", 61) - 1)
+                local hash = crc(content)
+                
+                local content_ = file.read("music-player-fft.txt")
+                local version_ = string.sub(content_, 61, string.find(content_, "\n", 61) - 1)
+                local hash_ = crc(content_)
+                
+                if version != version_ then
+                    print(string.format("GITHUB version: %s \nCURRENT version: %s", version, version_))
+    
                     file.write("music-player-fft.txt", content)
+                else
+                    if hash != hash_ then
+                        print(string.format("GITHUB hash: %s \nCURRENT hash: %s", hash, hash_))
+    
+                        file.write("music-player-fft.txt", content)
+                    end
                 end
-            end
-        end)
+            end)
+        end
     end
 end
