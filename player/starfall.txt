@@ -1,6 +1,6 @@
 --@name music-player-fft
 --@author kaisermustard
---@version 0.0.8
+--@version 0.0.10
 
 if SERVER then
     local component = {
@@ -839,23 +839,17 @@ if CLIENT then
     if player() == owner() then
         if http.canRequest() then
             http.get(script["starfall"].link, function(content, size)
-                local version = string.sub(content, 61, string.find(content, "\n", 61) - 1)
+                local version = string.explode(".", string.sub(content, 61, string.find(content, "\n", 61) - 1, "."), false)
                 local hash = crc(content)
                 
                 local content_ = file.read("music-player-fft.txt")
-                local version_ = string.sub(content_, 61, string.find(content_, "\n", 61) - 1)
+                local version_ = string.explode(".", string.sub(content_, 61, string.find(content_, "\n", 61) - 1, "."), false)
                 local hash_ = crc(content_)
                 
-                if version != version_ then
-                    print(string.format("GITHUB version: %s \nPLAYER version: %s", version, version_))
+                if tonumber(table.concat(version, "")) > tonumber(table.concat(version_, ""))then
+                    print(string.format("GITHUB version: %s / %s \nPLAYER version: %s / %s", table.concat(version, "."), hash, table.concat(version_, "."), hash_))
     
                     file.write("music-player-fft.txt", content)
-                else
-                    if hash != hash_ then
-                        print(string.format("GITHUB hash: %s \nPLAYER hash: %s", hash, hash_))
-    
-                        file.write("music-player-fft.txt", content)
-                    end
                 end
             end)
         end
