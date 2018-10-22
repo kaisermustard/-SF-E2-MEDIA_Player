@@ -1,19 +1,8 @@
 --@name music-player-fft
 --@author kaisermustard
---@version 0.0.11
+--@version 0.0.12
 
 if SERVER then
-    local component = {
-        ["starfall_screen"] = {
-            [1] = {
-                component = prop.createComponent(chip():localToWorld(Vector(0, 0, 50)), chip():localToWorldAngles(Angle(90, 0, 0)), "starfall_screen", "models/cheeze/pcb/pcb7.mdl", true),
-            },
-        },
-    }
-    
-    local class = "starfall_screen"
-    
-    component[class][1].component:linkComponent(chip())
 end
 
 if CLIENT then
