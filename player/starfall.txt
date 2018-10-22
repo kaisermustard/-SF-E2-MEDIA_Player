@@ -1,6 +1,6 @@
 --@name music-player-fft
 --@author kaisermustard
---@version 0.0.14
+--@version 0.0.15
 
 if SERVER then
     if chip():isWeldedTo() then
