@@ -1,8 +1,13 @@
 --@name music-player-fft
 --@author kaisermustard
---@version 0.0.12
+--@version 0.0.13
 
 if SERVER then
+    hook.add("keypress", "1", function(player, key)
+        net.start("")
+            net.writeInt(key, 16)
+        net.send(player)
+    end)
 end
 
 if CLIENT then
@@ -525,7 +530,7 @@ if CLIENT then
                 
                 matrix:setTranslation(Vector(math.remap(time, 0, duration, 16, 496) - 2, 494))
                 render.pushMatrix(matrix)
-                render.drawRoundedBox(32, 0, 0, 64, 64)
+                    render.drawRoundedBox(32, 0, 0, 64, 64)
                 render.popMatrix()
                 
                 minute = string.format("%02.f", math.floor(time / 60))
@@ -539,12 +544,12 @@ if CLIENT then
                 
                 matrix:setTranslation(Vector(16, 504))
                 render.pushMatrix(matrix)
-                render.drawSimpleText(0, 0, minute .. ":" .. second, 1, 1)
+                    render.drawSimpleText(0, 0, minute .. ":" .. second, 1, 1)
                 render.popMatrix()
                 
                 matrix:setTranslation(Vector(496, 504))
                 render.pushMatrix(matrix)
-                render.drawSimpleText(0, 0, minute_ .. ":" .. second_, 1, 1)
+                    render.drawSimpleText(0, 0, minute_ .. ":" .. second_, 1, 1)
                 render.popMatrix()
                 
                 -- title
@@ -558,7 +563,7 @@ if CLIENT then
                 
                 matrix:setTranslation(Vector(256, 504))
                 render.pushMatrix(matrix)
-                render.drawSimpleText(0, 0, toplay.title, 1, 1)
+                    render.drawSimpleText(0, 0, toplay.title, 1, 1)
                 render.popMatrix()
             end
             
@@ -588,17 +593,17 @@ if CLIENT then
                     
                     matrix:setTranslation(Vector(404, 53))
                     render.pushMatrix(matrix)
-                    render.drawSimpleText(0, 0, "Pause", 0, 1)
+                        render.drawSimpleText(0, 0, "Pause", 0, 1)
                     render.popMatrix()
                     
                     matrix:setTranslation(Vector(404, 73))
                     render.pushMatrix(matrix)
-                    render.drawSimpleText(0, 0, "Loop", 0, 1)
+                        render.drawSimpleText(0, 0, "Loop", 0, 1)
                     render.popMatrix()
                     
                     matrix:setTranslation(Vector(404, 93))
                     render.pushMatrix(matrix)
-                    render.drawSimpleText(0, 0, "Mute", 0, 1)
+                        render.drawSimpleText(0, 0, "Mute", 0, 1)
                     render.popMatrix()
                     
                     matrix:setTranslation(Vector(404, 113))
@@ -654,7 +659,7 @@ if CLIENT then
                         
                         matrix:setTranslation(Vector(8, 8 + (18 * i)))
                         render.pushMatrix(matrix)
-                        render.drawSimpleText(0, 0, i + scroll .. "°" .. " - " .. playlist[genre][i + scroll].title, 0, 1)
+                            render.drawSimpleText(0, 0, i + scroll .. "°" .. " - " .. playlist[genre][i + scroll].title, 0, 1)
                         render.popMatrix()
                     end
                 end
@@ -713,90 +718,56 @@ if CLIENT then
         end
     end
     
-    hook.add("keypress", "1", function(ply, key)
-        if key == 32 then
+    hook.add("net", "1", function()
+        local key = net.readUInt(16)
+        
+        if key == IN_KEY.USE then
             if inrange(4, 4, 16, 10) then
-                timer.create("list", 0.0050, 1, function()
-                    list = !list
-                    
-                    timer.remove("list")
-                end)
+                list = !list
             end
             
             if not list then
                 if inrange(492, 4, 16, 10) then
-                    timer.create("option", 0.0050, 1, function()
-                        option = !option
-                    
-                        timer.remove("option")
-                    end)
+                    option = !option
                 end
             
                 if option then
                     if inrange(387, 48, 12, 12) then
-                        timer.create("pause", 0.0050, 1, function()
-                            pause = !pause
-                    
-                            timer.remove("pause")
-                        end)
+                        pause = !pause
                     end
                     
                     if inrange(387, 68, 12, 12) then
-                        timer.create("loop", 0.0050, 1, function()
-                            loop = !loop
-                    
-                            timer.remove("loop")
-                        end)
+                        loop = !loop
                     end
                     
                     if inrange(387, 88, 12, 12) then
-                        timer.create("mute", 0.0050, 1, function()
-                            mute = !mute
-                    
-                            timer.remove("mute")
-                        end)
+                        mute = !mute
                     end
             
                     if inrange(387, 108, 12, 12) then
-                        timer.create("draw", 0.0050, 1, function()
-                            draw = !draw
-                    
-                            timer.remove("draw")
-                        end)
+                        draw = !draw
                     end
                 end
             end
             if list then
                 for i = 1, 25, 1 do
                     if inrange(6, 2 + (18 * i), 482, 12) then
-                        timer.create("element", 0.0050, 1, function()
-                            toplay = playlist[genre][i + scroll]
+                        toplay = playlist[genre][i + scroll]
                 
-                            duration = 3600
-                            time = 0
+                        duration = 3600
+                        time = 0
                 
-                            playing = false
-                        
-                            timer.remove("element")
-                        end)
+                        playing = false
                     end
                 end
                 
                 if #playlist[genre] > 25 then
                     if inrange(494, 20, 12, 12) then
-                        timer.create("scroll", 0.0050, 1, function()
-                            scroll = scroll - 1
-                        
-                            timer.remove("scroll")
-                        end)
+                        scroll = scroll - 1
                     end
                 
                     if inrange(494, 452, 12, 12) then
-                        timer.create("scroll", 0.0050, 1, function()
-                            scroll = scroll + 1
-                            
-                            timer.remove("scroll")
-                        end)
+                        scroll = scroll + 1
                     end
                 end
             end
