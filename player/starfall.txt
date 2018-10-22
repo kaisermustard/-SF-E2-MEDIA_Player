@@ -304,6 +304,10 @@ if CLIENT then
             [1] = {
                 texture = render.getTextureID("https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/texture/madeon.png"),
             },
+            
+            [2] = {
+                texture = render.getTextureID("https://raw.githubusercontent.com/kaisermustard/-SF-E2-MEDIA_Player/master/ressource/texture/synthwave.png"),
+            },
         },
         
         ["logo"] = {
